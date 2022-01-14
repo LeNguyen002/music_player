@@ -12,7 +12,7 @@
 
 html {
     font-family: "Poppins", sans-serif;
-    background-color: #f5f5f5;
+    background-color: #edededd2;
 }
 
 .main {
@@ -97,7 +97,7 @@ html {
     margin-bottom: 16px;
     width: 100%;
   -webkit-appearance: none;
-  height: 6px;
+  height: 10px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
@@ -109,7 +109,7 @@ html {
     -webkit-appearance: none;
     appearance: none;
     width: 12px;
-    height: 6px;
+    height: 10px;
     background-color: var(--primary-color);
     cursor: pointer;
   }
