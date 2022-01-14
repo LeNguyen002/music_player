@@ -47,6 +47,18 @@
                     <i class="fas fa-random"></i>
                 </div>
             </div>
+            <div class="volume-control">
+                <div class="btn btn-volume-up">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                <div class="btn btn-volume-mute active">
+                    <i class="fas fa-volume-mute"></i>
+                </div>
+                <div class="btn btn-volume-medium active">
+                    <i class="fas fa-volume-down"></i>
+                </div>
+                <input id="volume" class="volume" type="range" value="100" step="1" min="0" max="100">    
+            </div>
             <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">    
             <audio id="audio" src=""></audio>
         </div>
@@ -74,6 +86,10 @@
         const playBtn = $('.btn-play')
         const player = $('.main')
         const repeatBtn = $('.btn-repeat')
+        const volumeRange = $('.volume')
+        const volumeUp = $('.btn-volume-up')
+        const volumeMute = $('.btn-volume-mute')
+        const volumeMedium = $('.btn-volume-medium')
 
 
         const app = {
@@ -249,11 +265,32 @@
                     }
                 }
 
-                // song.onclick = function() {
-                //     app.loadCurrentSong()
-                // }
+                volumeRange.addEventListener("mousemove",function() {
+                    const x = volumeRange.value
+                    const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                    volumeRange.style.background = color
+                })
+
+                volumeRange.oninput = function() {
+                    const x = Number(volumeRange.value)
+                    audio.volume = volumeRange.value / 100
+                    console.log(volumeRange.value);
+                    if (x === 0) {
+                        volumeUp.classList.add("active")
+                        volumeMute.classList.remove("active")
+                        volumeMedium.classList.add("active")
+                    } else if (x > 0 && x < 60) {
+                        volumeUp.classList.add("active")
+                        volumeMedium.classList.remove("active")
+                        volumeMute.classList.add("active")
+                    } else if (x >= 60) {
+                        volumeUp.classList.remove("active")
+                        volumeMedium.classList.add("active")
+                        volumeMute.classList.add("active")
+                    }
+                }
                     
-                
+
                 //Bật tắt random song
                 btnRandom.onclick = function() {
                     app.isRandom = !app.isRandom

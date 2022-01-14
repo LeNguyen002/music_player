@@ -5,7 +5,7 @@
 }
 
 :root {
-    --primary-color: #ec1f55;
+    --primary-color: rgb(236, 31, 85);
     --text-color: #333;
 }
 
@@ -80,6 +80,10 @@ html {
     background-color: var(--primary-color);
     border-radius: 100rem;
 }
+.control .btn-back:active,
+.control .btn-next:active {
+    opacity: 0.8;
+}
 
 .control .icon-pause {
     display: none;
@@ -133,6 +137,61 @@ html {
     box-shadow: 0 0 10px rgb(0 0 0 / 10%);
 
 }
+
+
+
+
+
+.volume-control {
+    display: flex;
+    align-items: center;
+}
+
+.btn-volume-mute.active {
+    display: none;
+}
+
+.volume-control .btn {
+    font-size: 18px;
+    width: 18px;
+}
+
+.btn-volume-mute {
+    width: 18px;
+}
+
+.btn-volume-up.active {
+    display: none;
+}
+
+.btn-volume-medium.active {
+    display: none;
+}
+
+.volume {
+    margin-left: 10px;
+    background: linear-gradient(90deg, rgb(236, 31, 85) 60%, rgb(236, 31, 85) 60%);
+    border-radius: 10px;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    -webkit-appearance: none;
+    height: 10px;
+}
+
+.volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    cursor: pointer; 
+}
+
+
+
+
+
 
 .playlist {
     margin-top: 448px;
