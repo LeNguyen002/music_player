@@ -271,6 +271,12 @@
                     volumeRange.style.background = color
                 })
 
+                volumeRange.addEventListener("touchmove",function() {
+                    const x = volumeRange.value
+                    const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                    volumeRange.style.background = color
+                })
+
                 volumeRange.oninput = function() {
                     const x = Number(volumeRange.value)
                     audio.volume = volumeRange.value / 100
