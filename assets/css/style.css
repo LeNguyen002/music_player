@@ -111,7 +111,7 @@ html {
     width: 12px;
     height: 10px;
     background-color: var(--primary-color);
-    cursor: pointer;
+    cursor: pointer; 
   }
 
 .control > div {
