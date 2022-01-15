@@ -59,7 +59,11 @@
                 </div>
                 <input id="volume" class="volume" type="range" value="100" step="1" min="0" max="100">    
             </div>
-            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">    
+            <div class="progress-audio">
+                <span id="progressCurrentTime"></span>
+                <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+                <span id="progressDurationTime"></span>
+            </div>
             <audio id="audio" src=""></audio>
         </div>
 
@@ -90,6 +94,8 @@
         const volumeUp = $('.btn-volume-up')
         const volumeMute = $('.btn-volume-mute')
         const volumeMedium = $('.btn-volume-medium')
+        const durationTime = $('#progressDurationTime')
+        const currentTime = $('#progressCurrentTime')
 
 
         const app = {
@@ -111,12 +117,12 @@
                     path: './assets/music/Song2.mp3',
                     image: './assets/img/Song2.jfif'
                 },
-                // {
-                //     name: 'Aim to Be a Pokémon Master ',
-                //     singer: 'Goose house',
-                //     path: './assets/music/Song3.mp3',
-                //     image: './assets/img/Song3.jpg'
-                // },
+                {
+                    name: 'Aim to Be a Pokémon Master ',
+                    singer: 'Goose house',
+                    path: './assets/music/Song3.mp3',
+                    image: './assets/img/Song3.jpg'
+                },
                 {
                     name: 'First Steps',
                     singer: 'Lena Raine',
@@ -129,12 +135,12 @@
                     path: './assets/music/Song1.mp3',
                     image: './assets/img/Song1.png'
                 },
-                // {
-                //     name: 'Aim to Be a Pokémon Master ',
-                //     singer: 'Goose house',
-                //     path: './assets/music/Song3.mp3',
-                //     image: './assets/img/Song3.jpg'
-                // },
+                {
+                    name: 'Aim to Be a Pokémon Master ',
+                    singer: 'Goose house',
+                    path: './assets/music/Song3.mp3',
+                    image: './assets/img/Song3.jpg'
+                },
                 {
                     name: 'Stardew valley',
                     singer: 'Emily',
@@ -223,6 +229,8 @@
                     if (audio.duration) {
                         const progressPersent = Math.floor(audio.currentTime / audio.duration * 100)
                         progress.value = progressPersent
+                        durationTime.innerHTML = `${Math.floor(audio.duration / 60)}:${(audio.duration % 60) < 10 ? '0' + Math.floor(audio.duration % 60) : Math.floor(audio.duration % 60)}`
+                        currentTime.innerHTML = `${Math.floor(audio.currentTime / 60)}:${(audio.currentTime % 60) < 10 ? '0' + Math.floor(audio.currentTime % 60) : Math.floor(audio.currentTime % 60) }`
                     }
                 }
                 
@@ -278,9 +286,8 @@
                 })
 
                 volumeRange.oninput = function() {
-                    const x = Number(volumeRange.value)
+                    var x = Number(volumeRange.value)
                     audio.volume = volumeRange.value / 100
-                    console.log(volumeRange.value);
                     if (x === 0) {
                         volumeUp.classList.add("active")
                         volumeMute.classList.remove("active")
@@ -293,8 +300,70 @@
                         volumeUp.classList.remove("active")
                         volumeMedium.classList.add("active")
                         volumeMute.classList.add("active")
+                    }   
+                    
+                }
+
+                audio.oncanplay = function() {
+                    if (audio.duration) {
+                        durationTime.innerHTML = `${Math.floor(audio.duration / 60)}:${(audio.duration % 60) < 10 ? '0' + Math.floor(audio.duration % 60) : Math.floor(audio.duration % 60)}`
                     }
                 }
+
+                volumeUp.onclick = function() {
+                    const currentVolumeValue = Number(volumeRange.value)
+                    volumeRange.value = 0
+                    audio.volume = 0
+                    const x = volumeRange.value
+                    const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                    volumeRange.style.background = color
+                    volumeUp.classList.add("active")
+                    volumeMute.classList.remove("active")
+                    volumeMedium.classList.add("active")
+                    volumeMute.onclick = function() {
+                            volumeRange.value = currentVolumeValue
+                            const x = volumeRange.value
+                            const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                            volumeRange.style.background = color
+                            audio.volume = volumeRange.value / 100
+                            volumeUp.classList.remove("active")
+                            volumeMute.classList.add("active")
+                            volumeMedium.classList.add("active")
+                   }
+                }
+                
+                volumeMedium.onclick = function() {
+                    const currentVolumeValue = Number(volumeRange.value)
+                    volumeRange.value = 0
+                    audio.volume = 0
+                    const x = volumeRange.value
+                    const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                    volumeRange.style.background = color
+                    volumeUp.classList.add("active")
+                    volumeMute.classList.remove("active")
+                    volumeMedium.classList.add("active")
+                    volumeMute.onclick = function() {
+                            volumeRange.value = currentVolumeValue
+                            const x = volumeRange.value
+                            const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                            volumeRange.style.background = color
+                            audio.volume = volumeRange.value / 100
+                            volumeUp.classList.remove("active")
+                            volumeMute.classList.add("active")
+                            volumeMedium.classList.add("active")
+                    }
+                }
+
+                // volumeMute.onclick = function() {
+                //     volumeRange.value = 100
+                //     const x = volumeRange.value
+                //     const color = 'linear-gradient(90deg, rgb(236, 31, 85)' + x + '%, rgb(201, 201, 201)' + x + '%)'
+                //     volumeRange.style.background = color
+                //     audio.volume = volumeRange.value / 100
+                //     volumeUp.classList.remove("active")
+                //     volumeMute.classList.add("active")
+                //     volumeMedium.classList.add("active")
+                // }
                     
 
                 //Bật tắt random song
@@ -324,6 +393,8 @@
                         }   
                     } 
                 }
+
+                
             },
             scrollToActiveSong: function() {
                 setTimeout(function() {
@@ -351,6 +422,7 @@
                 header.textContent = this.currentSong.name
                 cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
                 audio.src = this.currentSong.path
+                currentTime.innerHTML = `${Math.floor(audio.currentTime / 60)}:${(audio.currentTime % 60) < 10 ? '0' + Math.floor(audio.currentTime % 60) : Math.floor(audio.currentTime % 60) }`
             },
             randomSong: function() {
                 let newIndex = this.currentIndex
